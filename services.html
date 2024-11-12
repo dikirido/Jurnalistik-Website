@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Sharing Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .logo img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #35aae0;
+        }
+
+        .search input {
+            padding: 8px 16px;
+            border: 2px solid #fff;
+            border-radius: 25px;
+            font-size: 16px;
+            width: 250px;
+            transition: width 0.3s ease;
+        }
+
+        .search input:focus {
+            width: 300px;
+            outline: none;
+            border-color: #35aae0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('logo.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            padding: 120px 20px;
+            color: #fff;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hero .btn {
+            padding: 10px 20px;
+            background-color: #35aae0;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .hero .btn:hover {
+            background-color: #2a88c5;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin-top: 40px;
+            transition: grid-template-columns 0.3s ease;
+        }
+
+        .video-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-card img,
+        .video-card video {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-card .title {
+            padding: 10px;
+            font-size: 18px;
+            background-color: #fff;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .video-card .description {
+            padding: 10px;
+            font-size: 14px;
+            color: #777;
+            background-color: #fff;
+        }
+
+        /* Like and Comment Section */
+        .like-comment-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+
+        .like-button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .like-button.liked {
+            background-color: #28a745;
+        }
+
+        .like-button:hover {
+            transform: scale(1.1);
+        }
+
+        .comment-section {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        .comment-section input {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .comment-section button {
+            padding: 8px 16px;
+            border: none;
+            background-color: #35aae0;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-section button:hover {
+            background-color: #2a88c5;
+        }
+
+        .comments {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .comment {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .comment-text {
+            background-color: #f1f1f1;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            max-width: 80%;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background-color: #0400ff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .upload-section h2 {
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: #fff;
+        }
+
+        .upload-section input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .upload-section input[type="file"]:hover {
+            border-color: #f4a500;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .navbar a {
+                font-size: 14px;
+            }
+
+            .search input {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo jornal.jpg" alt="Logo">
+            <h1>Website Jurnalistik</h1>
+        </div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#videos">Videos</a>
+            <a href="index2.html">Login akun</a>
+        </div>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Cari video..." onkeyup="filterVideos()">
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Selamat Datang di Website Jurnalistik</h2>
+        <p>Temukan berbagai video menarik di platform ini</p>
+        <a href="#videos" class="btn">Lihat Video</a>
+    </section>
+
+    <!-- Video Cards -->
+    <section class="video-grid" id="videos">
+        <div class="video-card" data-title="Video 1">
+            <video src="PUSDA.mp4" controls></video>
+            <div class="title">Judul Video 1</div>
+            <div class="description">Deskripsi singkat video 1.</div>
+            <div class="like-comment-section">
+                <button class="like-button" onclick="toggleLike(this)">Suka</button>
+                <span class="likes-count">0 Suka</span>
+            </div>
+            <div class="comment-section">
+                <input type="text" placeholder="Tulis komentar..." />
+                <button onclick="postComment(this)">Kirim</button>
+                <div class="comments"></div>
+            </div>
+        </div>
+        <!-- (Video Cards lainnya di sini) -->
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Website Jurnalistik SMKN 1 CIRUAS. Semua hak cipta dilindungi.</p>
+    </footer>
+
+    <script>
+        function filterVideos() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let videoCards = document.querySelectorAll('.video-card');
+
+            videoCards.forEach(function (card) {
+                let title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleLike(button) {
+            button.classList.toggle('liked');
+            let likeCount = button.parentElement.querySelector('.likes-count');
+            let currentLikes = parseInt(likeCount.textContent);
+            likeCount.textContent = button.classList.contains('liked') ? `${currentLikes + 1} Suka` : `${currentLikes - 1} Suka`;
+        }
+
+        function postComment(button) {
+            let commentInput = button.parentElement.querySelector('input');
+            let comment = commentInput.value.trim();
+            if (comment) {
+                let commentSection = button.parentElement.querySelector('.comments');
+                let newComment = document.createElement('div');
+                newComment.classList.add('comment');
+                newComment.innerHTML = '<img src="avatar.jpg" alt="User"><div class="comment-text">' + comment + '</div>';
+                commentSection.appendChild(newComment);
+                commentInput.value = '';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
